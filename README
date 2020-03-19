@@ -1,0 +1,21 @@
+Precompiling
+------------
+
+Build an image with linpack compiled using `march=native`
+
+```
+packer build hpl.json
+```
+
+Running Linpack
+---------------
+
+```
+ansible-playbook launch.yml -e @variables.yml
+```
+
+HPL.dat:
+--------
+Should sized appropriately for the machine, see:
+
+https://www.advancedclustering.com/act_kb/tune-hpl-dat-file/

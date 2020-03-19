@@ -1,0 +1,17 @@
+{
+  "variables": {
+  },
+    "builders": [{
+        "type": "openstack",
+        "ssh_username": "ubuntu",
+        "networks": ["e33c88f2-0949-40f4-8518-a98cc28657f8"],
+        "floating_ip_network": "dummy-external",
+        "image_name": "ubuntu-hpl",
+        "source_image": "5f04dd31-f310-4eaa-94e8-7513301e1ddc",
+        "flavor": "m1.xlarge"
+    }],
+    "provisioners": [{
+       "type": "ansible",
+      "playbook_file": "./customize.yml"
+    }]
+}

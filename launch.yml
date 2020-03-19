@@ -1,0 +1,46 @@
+---
+
+- hosts: localhost
+  vars:
+    instance_name: HPL-{{ ansible_date_time.iso8601_basic_short }}
+    meta:
+      group: hpl
+  tasks:
+    - block:
+      - name: launch instance
+        os_server:
+          name: "{{ instance_name }}"
+          state: present
+          key_name: "{{ key }}"
+          network: "{{ network }}"
+          image: "{{ hpl_image }}"
+          flavor: "{{ flavor }}"
+          floating_ips: "{{ floating_ips }}"
+          meta:
+            group: hpl
+        register: result
+  
+      - name: add hosts to inventory
+        add_host:
+          name: "{{ result['openstack']['name'] }}"
+          groups: "{{ result['openstack']['metadata']['group'] }}"
+          ansible_host: "{{ result.openstack.accessIPv4 }}"
+          ansible_user: ubuntu
+
+      - name: wait for SSH to become active
+        wait_for:
+          port: 22
+          host: '{{ result.openstack.accessIPv4 }}'
+          delay: 10
+
+      - name: include tasks
+        include_tasks: tasks/run.yml
+        args:
+          apply:
+            delegate_to: "{{ instance_name }}"
+
+      always:
+        - name: remove server
+          os_server:
+            name: "{{ instance_name }}"
+            state: absent
