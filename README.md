@@ -23,6 +23,12 @@ Running Linpack
 ansible-playbook launch.yml -e @variables.json
 ```
 
+The results will be output to the results directory:
+
+```
+(.venv) [stackhpc@localhost hpl]$ ls results/
+HPL-20200319T175315.stdout  HPL-20200319T175452.stdout  HPL-20200319T194000.stdout  HPL-20200319T194303.stdout
+```
 Tuning
 ------
 
