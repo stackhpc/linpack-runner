@@ -1,0 +1,21 @@
+---
+
+- hosts: benchmark-compute-0
+  vars:
+    output_file: iperf-{{ ansible_date_time.iso8601_basic_short }}
+  tasks:
+    - debug:
+        var: hostvars 
+    - command: iperf -c {{ hostvars["benchmark-compute-1"].ansible_host }}
+      register: result
+    - name: create results directory
+      file:
+        path: results
+        state: directory
+      delegate_to: localhost
+    - name: copy
+      vars:
+        # (libselinux-python) aren't installed!
+        ansible_python_interpreter: /usr/bin/python
+      copy: content="{{ result.stdout }}" dest="results/{{ output_file }}.stdout"
+      delegate_to: localhost

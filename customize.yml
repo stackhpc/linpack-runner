@@ -10,8 +10,21 @@
           - libatlas-base-dev
           - libopenmpi-dev
           - gfortran
+          - iperf
         state: present
         update_cache: true
+
+    - name: copy iperf service file
+      copy:
+        src: files/iperf.service
+        dest: /etc/systemd/system/iperf.service
+        mode: 0755
+        owner: root
+
+    - name: enable iperf
+      service:
+        name: iperf
+        enabled: true
 
     - name: download hpl
       unarchive:
