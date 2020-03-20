@@ -13,20 +13,20 @@ Building the image
 Build an image with linpack compiled using `march=native`
 
 ```
-ansible-playbook build.yml -e@variables.json
+ansible-playbook build.yml -e @variables.json
 ```
 
 Running Linpack
 ---------------
 
 ```
-ansible-playbook launch.yml -e @variables.yml
+ansible-playbook launch.yml -e @variables.json
 ```
 
 Tuning
 ------
 
-##HPL.dat:
+### HPL.dat:
 Should sized appropriately for the machine, see:
 
 https://www.advancedclustering.com/act_kb/tune-hpl-dat-file/
