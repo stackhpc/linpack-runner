@@ -7,6 +7,12 @@ Install hashicorp [packer](https://packer.io/) and add it to your PATH:
 export PATH=~/will:$PATH
 ```
 
+Configuration
+-------------
+
+Configuration is done via extra variables passed to ansible, see `variables.json`. This contains an example set of values which will need to modified for your environment.
+
+
 Building the image
 ------------------
 
