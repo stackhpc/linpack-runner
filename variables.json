@@ -1,0 +1,11 @@
+{
+  "base_image_url": "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img",
+  "processes": "18",
+  "network": "e33c88f2-0949-40f4-8518-a98cc28657f8",
+  "floating_network": "dummy-external",
+  "floating_ip": "192.168.0.30",
+  "hpl_image": "ubuntu-hpl",
+  "key": "stackhpc-ansible-0",
+  "flavor": "m1.xlarge",
+  "base_image": "ubuntu-focal-18-03-2020"
+}

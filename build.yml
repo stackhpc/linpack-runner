@@ -1,0 +1,29 @@
+---
+
+- hosts: localhost
+  tasks: 
+    - name: Download base image
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+      get_url:
+        url: "{{ base_image_url }}"
+        dest: /tmp/base.img
+
+    - name: Upload image to glance
+      os_image:
+        name: "{{ base_image }}"
+        filename: /tmp/base.img
+        state: present
+
+    - name: Check if packer image is built
+      os_image_facts:
+        image: "{{ hpl_image }}"
+      register: result
+      changed_when: not result.ansible_facts.openstack_image
+      notify: build image
+
+  handlers:
+    - name: build image
+      command: packer build -var-file variables.json hpl.json
+  
+  

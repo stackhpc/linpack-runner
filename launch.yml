@@ -15,7 +15,8 @@
           network: "{{ network }}"
           image: "{{ hpl_image }}"
           flavor: "{{ flavor }}"
-          floating_ips: "{{ floating_ips }}"
+          floating_ips:
+            - "{{ floating_ip }}"
           meta:
             group: hpl
         register: result
