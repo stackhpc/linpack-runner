@@ -2,9 +2,14 @@
 
 - hosts: compute:!benchmark-compute-0
   vars:
-    output_file: iperf-{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic_short }}
+    output_file: iperf-{{ inventory_hostname }}-{{ timestamp }}
     strategy: free
   tasks:
+    - name: set fact containing timestamp
+      # This is so the timestamps align
+      set_fact:
+        timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+      run_once: true
     - command: iperf -c {{ hostvars["benchmark-compute-0"].ansible_host }} -t 600 -P 8
       register: result
     - name: create results directory
