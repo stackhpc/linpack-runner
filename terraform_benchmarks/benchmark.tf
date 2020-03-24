@@ -37,7 +37,7 @@ resource "openstack_compute_instance_v2" "compute" {
   flavor_name     = var.flavor
   key_pair        = var.key
   security_groups = ["default"]
-  count           = 2
+  count           = 7
   availability_zone = "nova::${split(",", var.compute_hosts)[count.index]}"
   network {
     uuid = var.network
@@ -56,7 +56,7 @@ data  "template_file" "inventory" {
     vars = {
       computes = <<EOT
 %{for compute in openstack_compute_instance_v2.compute}
-${compute.name} ansible_host=${compute.network[0].fixed_ip_v4} ansible_user=${var.login_user}%{ endfor }
+${compute.name} ansible_host=%{if length(compute.network) != 0}${compute.network[0].fixed_ip_v4}%{ endif } ansible_user=${var.login_user}%{ endfor }
 EOT
     }
 }
