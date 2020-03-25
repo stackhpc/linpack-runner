@@ -7,6 +7,7 @@
   "hpl_image": "ubuntu-hpl",
   "key": "stackhpc-ansible-0",
   "flavor": "m1.xlarge",
+  "instances": 2,
   "base_image": "ubuntu-focal-18-03-2020",
   "login_user": "ubuntu",
   "compute_hosts": "compute-0,compute-1,compute-2,compute-3,compute-4,compute-6,compute-7,compute-8,compute-9",
