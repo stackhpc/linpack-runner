@@ -1,0 +1,9 @@
+---
+
+terraform_variables:
+  benchmark_image: "{{ benchmark_image }}"
+  flavor: "{{ flavor }}"
+  floating_ip: "{{ floating_ip }}"
+  key: "{{ key }}"
+  login_user: "{{ login_user }}"
+  network: "{{ network }}"

@@ -1,0 +1,10 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Destroy terraform defined infrastructure
+      terraform:
+        project_path: terraform_benchmarks/
+        state: absent
+        variables: "{{ terraform_variables }}"

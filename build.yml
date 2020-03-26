@@ -17,13 +17,17 @@
 
     - name: Check if packer image is built
       os_image_facts:
-        image: "{{ hpl_image }}"
+        image: "{{ benchmark_image }}"
       register: result
       changed_when: not result.ansible_facts.openstack_image
       notify: build image
 
   handlers:
     - name: build image
-      command: packer build -var-file variables.json hpl.json
-  
-  
+      command: packer build packer.json
+      environment:
+        PACKER_VAR_network: "{{ network }}"
+        PACKER_VAR_floating_network: "{{ floating_network }}"
+        PACKER_VAR_benchmark_image: "{{ benchmark_image }}"
+        PACKER_VAR_base_image: "{{ base_image }}"
+        PACKER_VAR_flavor: "{{ flavor }}"

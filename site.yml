@@ -1,0 +1,13 @@
+ansible_ssh_extra_args: -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no
+  -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -o StrictHostKeyChecking=no
+  -o UserKnownHostsFile=/dev/null -W %h:%p ubuntu@192.168.0.30"
+base_image: ubuntu-focal-18-03-2020
+base_image_url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+flavor: m1.xlarge
+floating_ip: 192.168.0.30
+floating_network: dummy-external
+benchmark_image: ubuntu-hpl
+key: stackhpc-ansible-0
+login_user: ubuntu
+# tenant network
+network: e33c88f2-0949-40f4-8518-a98cc28657f8

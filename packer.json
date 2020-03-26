@@ -1,0 +1,25 @@
+{
+  "variables": {
+      "network": "{{env `PACKER_VAR_network`}}",
+      "floating_network": "{{env `PACKER_VAR_floating_network`}}",
+      "benchmark_image": "{{env `PACKER_VAR_benchmark_image`}}",
+      "base_image": "{{env `PACKER_VAR_base_image`}}",
+      "flavor": "{{env `PACKER_VAR_flavor`}}"
+  },
+    "builders": [{
+        "type": "openstack",
+        "ssh_username": "ubuntu",
+        "networks": ["{{user `network`}}"],
+        "floating_ip_network": "{{user `floating_network`}}",
+        "image_name": "{{user `benchmark_image`}}",
+        "source_image_name": "{{user `base_image`}}",
+        "flavor": "{{user `flavor`}}",
+        "metadata": {
+            "hw_vif_multiqueue_enabled": "true"
+        }
+    }],
+    "provisioners": [{
+       "type": "ansible",
+      "playbook_file": "./modify-image.yml"
+    }]
+}

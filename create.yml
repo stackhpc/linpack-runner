@@ -1,0 +1,32 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create terraform defined infrastructure
+      terraform:
+        project_path: terraform_benchmarks/
+        state: present
+        variables: "{{ terraform_variables }}"
+
+    - meta: refresh_inventory
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: wait for SSH to become active on floating ip
+      wait_for:
+        port: 22
+        host: '{{ floating_ip }}'
+        timeout: 300
+      when: floating_ip | default(false)
+
+- hosts: compute
+  gather_facts: false
+  tasks:
+    - name: wait for SSH to be accessible
+      wait_for:
+        port: 22
+        host: '{{ ansible_host }}'
+        timeout: 300
+      delegate_to: "{{ groups['compute'][0] if floating_ip | default(false) else localhost }}"
